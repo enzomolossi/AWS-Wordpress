@@ -23,21 +23,13 @@ Foram criados 4 Security Groups, `SG-Public, SG-Private, SG-banco e SG-load`
 # Instalação e Configuração do Docker na instância
 - Criação de uma instância EC2 com ambiente AWS Linux 2;
 - Na criação da instância, em Dados avançados no campo de "User data", foi adicionado o script abaixo para instalação automática do Docker e docker-compose;
-
-#!/bin/bash
-- sudo yum update -y
-- sudo yum install -y docker
-- sudo systemctl start docker
-- sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-- sudo chmod +x /usr/local/bin/docker-compose
-- sudo usermod -a -G docker ec2-user
-- mv /usr/local/bin/docker-compose /bin/docker-compose
-
+```
 #!/bin/bash
 sudo yum update  -y
-sudo yum install -y docker                                                                  AJEITAR SCRIPT
+sudo yum install -y docker
 sudo usermod -a -G docker ec2-user
 sudo systemctl start docker
+```
 
 # EFS
 - Acessar instância privada por meio da bastion host;
@@ -51,11 +43,11 @@ sudo systemctl start docker
 - Escolha do Banco MYSQL;
 - Seleção da VPC e do security group criados para o projeto;
 - Criação do nome do banco, usuário, e senha.
-- 
+
 # Usando o Docker
 Execução do script através do comando “docker-compose up -d” em segundo plano.
 Script:
-
+```
 - version: "3"
 - services:
 -  db:
@@ -83,8 +75,7 @@ Script:
   -    - "/home/ec2-user/efs:/var/www/html"
 - volumes:
 -  mysql: {}
-
-
+```
 # Target group
 - Seleção das instâncias que o LB irá atuar e habilitar o balanceamento de carga;
 - Adição das intâncias no target group para associa-lás ao Load Balancer.
